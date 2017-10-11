@@ -87,6 +87,7 @@ function displayQuestion(){
 //reveals the possible answers
 function displayAnswers(){
 	var alreadyDisplayed = [];
+	var newList = $("<ol>");
 
 	do{
 		//grabs a random index to select to show on the screen
@@ -104,28 +105,29 @@ function displayAnswers(){
 			}
 		}while(found && alreadyDisplayed.length < 4)
 
-		var newDiv = $("<div>");
-		newDiv.addClass("answers");
+		
+		var newItem = $("<li>");
+		newItem.addClass("answers");
 
 		//determines if it is the correct answer to show or an incorrect one
 		if(random <= 2){
-			newDiv.html(questionList[questionsCounter].incorrect_answers[random]);
-			newDiv.attr("data", questionList[questionsCounter].incorrect_answers[random]);
+			newItem.html(questionList[questionsCounter].incorrect_answers[random]);
+			newItem.attr("data", questionList[questionsCounter].incorrect_answers[random]);
 		}
 		else{
-			newDiv.html(questionList[questionsCounter].correct_answer);
-			newDiv.attr("data", questionList[questionsCounter].correct_answer);
+			newItem.html(questionList[questionsCounter].correct_answer);
+			newItem.attr("data", questionList[questionsCounter].correct_answer);
 		}
 
-		newDiv.click(checkAnswer);
-		
-		$("#answers").append(newDiv);
+		newItem.click(checkAnswer);
+
+		newList.append(newItem);
 
 		//adds to the array of indexes of already displayed answers
 		alreadyDisplayed.push(random);
 	}while(alreadyDisplayed.length < 4);
 
-	$("#answers").append(newDiv);
+	$("#answers").append(newList);
 
 	//set an interval to display the time left and shows on the page
 	timeRemaining = WAITFORSELECTION / 1000;
