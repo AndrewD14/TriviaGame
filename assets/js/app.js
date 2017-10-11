@@ -81,7 +81,6 @@ function displayQuestion(){
 
 	//sets a timer to wait to display the answers so the player has time to read first
 	mainTimer = setTimeout(displayAnswers, WAITTOSHOWANSWER);
-
 }
 
 //reveals the possible answers
@@ -89,11 +88,13 @@ function displayAnswers(){
 	var alreadyDisplayed = [];
 	var newList = $("<ol>");
 
+	//loops through till all choices have been added
 	do{
 		//grabs a random index to select to show on the screen
 		var random;
 		var found
 
+		//loops till an index that was not selected yet is picked
 		do{
 			random = Math.floor(Math.random() * (questionList[questionsCounter].incorrect_answers.length+1));
 
@@ -105,7 +106,6 @@ function displayAnswers(){
 			}
 		}while(found && alreadyDisplayed.length < 4)
 
-		
 		var newItem = $("<li>");
 		newItem.addClass("answers");
 
@@ -114,19 +114,23 @@ function displayAnswers(){
 			newItem.html(questionList[questionsCounter].incorrect_answers[random]);
 			newItem.attr("data", questionList[questionsCounter].incorrect_answers[random]);
 		}
+		//adds the correct answer to the list
 		else{
 			newItem.html(questionList[questionsCounter].correct_answer);
 			newItem.attr("data", questionList[questionsCounter].correct_answer);
 		}
 
+		//adds a click action to the list item
 		newItem.click(checkAnswer);
 
+		//adds the list item to the ordered list tag
 		newList.append(newItem);
 
 		//adds to the array of indexes of already displayed answers
 		alreadyDisplayed.push(random);
 	}while(alreadyDisplayed.length < 4);
 
+	//appends the ordered list to the html
 	$("#answers").append(newList);
 
 	//set an interval to display the time left and shows on the page
@@ -147,7 +151,7 @@ function ranOutOfTime(){
 
 	//displays time ran out
 	$("#text-response").html("RAN OUT OF TIME!");
-	$("#text-response").attr("class", "answer-wrong");
+	$("#text-response").attr("class", "answer-wrong"); //overrides the classes for this element
 
 	//increment wrong guesses
 	questionsWrong++;
@@ -185,13 +189,14 @@ function checkAnswer(){
 		questionsRight++;
 		$(this).addClass("correct");
 		$("#text-response").html("CORRECT!");
-		$("#text-response").attr("class", "answer-correct");
+		$("#text-response").attr("class", "answer-correct"); //overrides the classes for this element
 	}
+	//check incorrect answer picked
 	else{
 		questionsWrong++;
 		$(this).addClass("wrong");
 		$("#text-response").html("WRONG!");
-		$("#text-response").attr("class", "answer-wrong");
+		$("#text-response").attr("class", "answer-wrong"); //overrides the classes for this element
 
 		//checks all the div child and highlights the correct one
 		$("#answers .answers").each(function(){
