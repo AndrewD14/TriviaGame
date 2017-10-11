@@ -147,6 +147,7 @@ function ranOutOfTime(){
 
 	//displays time ran out
 	$("#text-response").html("RAN OUT OF TIME!");
+	$("#text-response").attr("class", "answer-wrong");
 
 	//increment wrong guesses
 	questionsWrong++;
@@ -184,11 +185,13 @@ function checkAnswer(){
 		questionsRight++;
 		$(this).addClass("correct");
 		$("#text-response").html("CORRECT!");
+		$("#text-response").attr("class", "answer-correct");
 	}
 	else{
 		questionsWrong++;
 		$(this).addClass("wrong");
 		$("#text-response").html("WRONG!");
+		$("#text-response").attr("class", "answer-wrong");
 
 		//checks all the div child and highlights the correct one
 		$("#answers .answers").each(function(){
