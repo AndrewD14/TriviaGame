@@ -149,6 +149,9 @@ function ranOutOfTime(){
 	clearInterval(timerToAnswer);
 	$("#timer").html("");
 
+	//removes the click to not allow players to guess while the answer is being shown
+	$("#answers .answers").unbind("click");
+
 	//displays time ran out
 	$("#text-response").html("RAN OUT OF TIME!");
 	$("#text-response").attr("class", "answer-wrong"); //overrides the classes for this element
