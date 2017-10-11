@@ -17,7 +17,7 @@ function getQuestions(){
 	//ajax paramenters
 	var queryURL = "https://opentdb.com/api.php";
 	var numOfQuestions = 10;
-	var categoryOfQuestion = 21; //31 is for Japanese Anime and Manga 21 is for sports
+	var categoryOfQuestion = 31; //31 is for Japanese Anime and Manga 21 is for sports
 	var typeOfQuestion = "multiple"; 
 
 	//data parameter object
@@ -71,10 +71,13 @@ function displayQuestion(){
 	//clears the possible answers first
 	$("#answers").empty();
 
-	$("#question").html(questionList[questionsCounter].question);
+	$("#question").html("Question "+(questionsCounter+1)+": "+questionList[questionsCounter].question);
 
 	//clears the time remaining on the page
 	$("#timer").html("");
+
+	//clears the word results
+	$("#text-response").html("");
 
 	//sets a timer to wait to display the answers so the player has time to read first
 	mainTimer = setTimeout(displayAnswers, WAITTOSHOWANSWER);
@@ -139,6 +142,9 @@ function ranOutOfTime(){
 	//clears the interval
 	clearInterval(timerToAnswer);
 	$("#timer").html("");
+
+	//displays time ran out
+	$("#text-response").html("RAN OUT OF TIME!");
 
 	//increment wrong guesses
 	questionsWrong++;
@@ -207,6 +213,12 @@ function showResults(){
 
 	//clears the possible answers first
 	$("#answers").empty();
+
+	//clears the word results
+	$("#text-response").html("");
+
+	//clears the timer on the page
+	$("#timer").html("");
 }
 
 //function counter decrease and display on the page

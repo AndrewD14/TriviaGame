@@ -1,3 +1,16 @@
+body {
+	background-image: url("../images/question-mark-background.jpg");
+}
+
+#logo {
+	height: 350px;
+}
+
+.container {
+	background-color: aquamarine;
+	min-height: calc(100vh);
+}
+
 .correct{
 	border-width: 2px;
 	border-color: green;
