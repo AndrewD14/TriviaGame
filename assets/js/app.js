@@ -159,6 +159,9 @@ function ranOutOfTime(){
 	//increment wrong guesses
 	questionsWrong++;
 
+	//calls the function to display the correct answer
+	showCorrectAnswer();
+
 	getNextQuestion();
 }
 
@@ -201,15 +204,21 @@ function checkAnswer(){
 		$("#text-response").html("WRONG!");
 		$("#text-response").attr("class", "answer-wrong"); //overrides the classes for this element
 
-		//checks all the div child and highlights the correct one
-		$("#answers .answers").each(function(){
-			if($(this).attr("data") == questionList[questionsCounter].correct_answer)
-				$(this).addClass("correct");
-		});
+		//calls the function to display the correct answer
+		showCorrectAnswer();
 	}
 
 	//calls the function to queue the next question
 	getNextQuestion();
+}
+
+//function to show the correct answer
+function showCorrectAnswer(){
+	//checks all the div child and highlights the correct one
+		$("#answers .answers").each(function(){
+			if($(this).attr("data") == questionList[questionsCounter].correct_answer)
+				$(this).addClass("correct");
+		});
 }
 
 //function to display the results
