@@ -1,9 +1,11 @@
 //global variables
 var mainTimer;
+var timerToAnswer;
 var questionList;
 var questionsRight;
 var questionsWrong;
 var questionsCounter;
+var timeRemaining;
 
 //global constants
 var WAITTOSHOWANSWER = 5000;
@@ -15,7 +17,7 @@ function getQuestions(){
 	//ajax paramenters
 	var queryURL = "https://opentdb.com/api.php";
 	var numOfQuestions = 10;
-	var categoryOfQuestion = 31; //31 is for Japanese Anime and Manga
+	var categoryOfQuestion = 21; //31 is for Japanese Anime and Manga 21 is for sports
 	var typeOfQuestion = "multiple"; 
 
 	//data parameter object
@@ -35,15 +37,17 @@ function getQuestions(){
 	questionsRight = 0;
 	questionsWrong = 0;
 	questionsCounter = 0;
+
+	//clears the previous results
+	$("#correct").html("");
+	$("#wrong").html("");
 }
 
 //function to parse the response JSON
 function populateQuestion(response){
-	console.log(response.results);
 	questionList = response.results;
 
-	$("#start").css("display", "block");
-	$("#start").click(startGame);
+	displayQuestion(questionsCounter);
 }
 
 //function to display error with ajax query
@@ -55,7 +59,8 @@ function populateQuestionError(response){
 function startGame(){
 	$("#start").css("display", "none");
 	
-	displayQuestion(questionsCounter);
+	//calls the api to get the questions from the api
+	getQuestions();
 }
 
 //shows the current question
@@ -70,6 +75,7 @@ function displayQuestion(){
 
 	//sets a timer to wait to display the answers so the player has time to read first
 	mainTimer = setTimeout(displayAnswers, WAITTOSHOWANSWER);
+
 }
 
 //reveals the possible answers
@@ -114,11 +120,23 @@ function displayAnswers(){
 	}while(alreadyDisplayed.length < 4);
 
 	$("#answers").append(newDiv);
+
+	//set an interval to display the time left and shows on the page
+	timeRemaining = WAITFORSELECTION / 1000;
+	$("#timer").html("<b>Time Remaining:</b> "+timeRemaining);
+
+	timerToAnswer = setInterval(countDown, 1000);
+
+	//timer to choose the answer
 	mainTimer = setTimeout(ranOutOfTime, WAITFORSELECTION);
 }
 
 //function that forces the player to lose the guess if taking too long
 function ranOutOfTime(){
+	//clears the interval
+	clearInterval(timerToAnswer);
+	$("#timer").html("");
+
 	//increment wrong guesses
 	questionsWrong++;
 
@@ -134,12 +152,19 @@ function getNextQuestion(){
 		//sets a timer to wait to display the next question
 		mainTimer = setTimeout(displayQuestion, WAITFORNEXTQUESTION);
 	}
+	//calls the reveal results function
+	else
+		mainTimer = setTimeout(showResults, WAITFORNEXTQUESTION);
 }
 
 //function to check for correct answer
 function checkAnswer(){
 	//clears the timer for waiting for a guess
 	clearTimeout(mainTimer);
+
+	//clears the interval
+	clearInterval(timerToAnswer);
+	$("#timer").html("");
 
 	//removes the click to not allow players to guess multiple times
 	$("#answers .answers").unbind("click");
@@ -156,4 +181,27 @@ function checkAnswer(){
 
 	//calls the function to queue the next question
 	getNextQuestion();
+}
+
+//function to display the results
+function showResults(){
+	//reveals the start button and changes the text to repurpose it
+	$("#start").html("Play Again?");
+	$("#start").css("display", "block");
+
+	$("#correct").html("<h3>Answered correctly:</h3> "+questionsRight);
+	$("#wrong").html("<h3>Answered incorrectly:</h3> "+questionsWrong);
+
+	//clears the question first
+	$("#question").empty();
+
+	//clears the possible answers first
+	$("#answers").empty();
+}
+
+//function counter decrease and display on the page
+function countDown(){
+	timeRemaining--;
+
+	$("#timer").html("<b>Time Remaining:</b> "+timeRemaining);
 }

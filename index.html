@@ -6,7 +6,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 		<link rel = "stylesheet" type = "text/css" href = "assets/css/reset.css" />
-		<!--<link rel = "stylesheet" type = "text/css" href = "assets/css/style.css" />-->
+		<<link rel = "stylesheet" type = "text/css" href = "assets/css/style.css" />
 		
 		<!--jQuery import script-->
 		<script
@@ -18,12 +18,17 @@
 	</head>
 	<body>
 		<button id="start">Start</button>
+		<div id="timer"></div>
 		<div id="question"></div>
 		<div id= "answers"></div>
+		<div>
+			<div id="correct"></div>
+			<div id="wrong"></div>
+		</div>
 
 		<script type="text/javascript">
 			$(document).ready(function(){
-				getQuestions();
+				$("#start").click(startGame);
 			});
 		</script>
 	</body>
