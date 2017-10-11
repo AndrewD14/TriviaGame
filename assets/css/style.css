@@ -1,5 +1,10 @@
 body {
 	background-image: url("../images/question-mark-background.jpg");
+	font-family: 'Acme', sans-serif;
+}
+
+button {
+	font-family: 'Passion One', cursive;
 }
 
 #logo {
