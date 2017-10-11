@@ -1,10 +1,10 @@
-#correct{
+.correct{
 	border-width: 2px;
 	border-color: green;
 	border-style: solid;
 }
 
-#wrong {
+.wrong {
 	border-width: 2px;
 	border-color: red;
 	border-style: solid;

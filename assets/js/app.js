@@ -73,6 +73,9 @@ function displayQuestion(){
 
 	$("#question").html(questionList[questionsCounter].question);
 
+	//clears the time remaining on the page
+	$("#timer").html("");
+
 	//sets a timer to wait to display the answers so the player has time to read first
 	mainTimer = setTimeout(displayAnswers, WAITTOSHOWANSWER);
 
@@ -164,7 +167,6 @@ function checkAnswer(){
 
 	//clears the interval
 	clearInterval(timerToAnswer);
-	$("#timer").html("");
 
 	//removes the click to not allow players to guess multiple times
 	$("#answers .answers").unbind("click");
@@ -172,11 +174,19 @@ function checkAnswer(){
 	//checks the attr with the correct answer
 	if($(this).attr("data") == questionList[questionsCounter].correct_answer){
 		questionsRight++;
-		console.log("You got it right");
+		$(this).addClass("correct");
+		$("#text-response").html("CORRECT!");
 	}
 	else{
 		questionsWrong++;
-		console.log("You got it wrong");
+		$(this).addClass("wrong");
+		$("#text-response").html("WRONG!");
+
+		//checks all the div child and highlights the correct one
+		$("#answers .answers").each(function(){
+			if($(this).attr("data") == questionList[questionsCounter].correct_answer)
+				$(this).addClass("correct");
+		});
 	}
 
 	//calls the function to queue the next question
