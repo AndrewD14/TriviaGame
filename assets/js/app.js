@@ -71,7 +71,7 @@ function displayQuestion(){
 	//clears the possible answers first
 	$("#answers").empty();
 
-	$("#question").html("Question "+(questionsCounter+1)+": "+questionList[questionsCounter].question);
+	$("#question").html("<h4>Question "+(questionsCounter+1)+":</h4> "+questionList[questionsCounter].question+" ("+questionList[questionsCounter].difficulty+")");
 
 	//clears the time remaining on the page
 	$("#timer").html("");
@@ -129,7 +129,7 @@ function displayAnswers(){
 
 	//set an interval to display the time left and shows on the page
 	timeRemaining = WAITFORSELECTION / 1000;
-	$("#timer").html("<b>Time Remaining:</b> "+timeRemaining);
+	$("#timer").html("<h5>Time Remaining: </h5>"+timeRemaining);
 
 	timerToAnswer = setInterval(countDown, 1000);
 
@@ -205,8 +205,8 @@ function showResults(){
 	$("#start").html("Play Again?");
 	$("#start").css("display", "block");
 
-	$("#correct").html("<h3>Answered correctly:</h3> "+questionsRight);
-	$("#wrong").html("<h3>Answered incorrectly:</h3> "+questionsWrong);
+	$("#correct").html("<h5>Answered correctly:</h5> "+questionsRight);
+	$("#wrong").html("<h5>Answered incorrectly:</h5> "+questionsWrong);
 
 	//clears the question first
 	$("#question").empty();
@@ -225,5 +225,5 @@ function showResults(){
 function countDown(){
 	timeRemaining--;
 
-	$("#timer").html("<b>Time Remaining:</b> "+timeRemaining);
+	$("#timer").html("<h5>Time Remaining:</h5> "+timeRemaining);
 }

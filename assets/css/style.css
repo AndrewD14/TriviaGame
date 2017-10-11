@@ -9,6 +9,7 @@ body {
 .container {
 	background-color: aquamarine;
 	min-height: calc(100vh);
+	padding: 30px;
 }
 
 .correct{
@@ -21,4 +22,12 @@ body {
 	border-width: 2px;
 	border-color: red;
 	border-style: solid;
+}
+
+h5 {
+	display: inline;
+}
+
+#answers {
+	padding-left: 0px;
 }
